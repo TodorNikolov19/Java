@@ -1,0 +1,21 @@
+//Е-то може да се замени с всяка буква или израз и пак ще паботи 
+public class Main
+{
+public static < E > void printArray(E[] elements) {  
+        for ( E element : elements){          
+            //System.out.println(element );  
+             System.out.print(element); 
+         }  
+         System.out.println();  
+    }  
+    public static void main( String args[] ) {  
+        Integer[] intArray = { 1, 2, 3, 4, 5 };  
+        Character[] charArray = { 'E', 'X', 'A', 'M','P','L','E' };  
+  
+        System.out.println( "Printing Integer Array" );  
+        printArray( intArray  );   
+  
+       System.out.println( "Printing Character Array" );  
+        printArray( charArray );   
+    }   
+}
