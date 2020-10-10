@@ -1,0 +1,61 @@
+class Customer{  
+    int amount=10000;  
+      
+    synchronized void withdraw(int amount){
+        
+    while(true){// добавих while + continue
+    System.out.println("going to withdraw...");  
+      
+    if(this.amount<amount){  
+    System.out.println("Less balance; waiting for deposit..."+"Всичко: "+this.amount+"Част: "+amount);  
+   
+    try{wait();
+    continue;//излизам от try блока и карам нишката да повтори проверката. 
+    //Иначе щом се събуди с notify(); при  deposit метода, продължава от 
+    //момента в който е сряна с wait() и пропуска проверка (депозитът може да е твърде малък 
+    // и недостатъчен за теглене) 
+    
+    }catch(Exception e){}  
+    }  
+    else break;//brrrrrrrrrr
+        }//while
+    
+    this.amount-=amount;  
+    System.out.println("withdraw completed..."+amount);  
+    }  
+      
+      
+      
+      
+    synchronized void deposit(int amount){  
+    System.out.println("going to deposit...");  
+    this.amount+=amount;  
+    System.out.println("deposit completed... "+"Vnesen: "+amount);  
+    notify();  
+    }  
+    }  
+      
+    class Main{  
+    public static void main(String args[]){  
+    final Customer c=new Customer();  
+    //final Customer c2=new Customer(); 
+    
+    new Thread(){  
+    public void run(){c.withdraw(14000);}  
+    }.start();  
+    
+   new Thread(){  
+    public void run(){c.withdraw(1000);}  
+    }.start();
+  
+   /* new Thread(){  
+    public void run(){c2.withdraw(1000);}  
+    }.start();  
+    */
+    
+    new Thread(){  
+    public void run(){c.deposit(100);}  
+    }.start();  
+      
+    }}  
+    
